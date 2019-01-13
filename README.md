@@ -1,7 +1,7 @@
 # SAMBA
 
 ## Aitor Galilea@edt ASIX M06 2018-2019
-Las imágenes se encuentran en el Dockerhub de [Aitor Galilea](https://hub.docker.com/u/ClRDAN/)
+Las imágenes se encuentran en el Dockerhub de [Aitor Galilea](https://hub.docker.com/u/ClRDAN/), los archivos para generar dichas imágenes están en [este](https://github.com/ClRDAN/sambahomes) repositorio de github.
 
 ### Descripción general:
 Práctica de integración de las tecnologías PAM, LDAP y SAMBA. En esta parte creamos un servidor SAMBA capaz de conectar a un servidor LDAP y exportar directorios HOME de usuarios locales y LDAP. Para ello necesitamos un servidor LDAP (el mismo usado en prácticas anteriores), un servidor SAMBA y un cliente con LDAP y PAM configurados
@@ -24,12 +24,14 @@ Práctica de integración de las tecnologías PAM, LDAP y SAMBA. En esta parte c
 * Arrancamos los daemon nscd y nslcd, necesarios para la comunicación con LDAP.
 
 ### Imágenes:
-* **agalilea/sambahomes** Servidor SAMBA *shares* que comparte los homes de usuarios LDAP y locales. Archivos para generar la imagen en 
+* **agalilea/sambahome** Servidor SAMBA *shares* que comparte los homes de usuarios LDAP y locales. Archivos para generar la imagen en 
 * **agalilea/sambaclient** Máquina cliente
 * **agalilea/ldap** Servidor LDAP
 
-#### Execució
+#### Ejecución
 
 ```
-docker run --rm --network sambanet --name sambahome --hostname sambahome -it agalilea/samba:18homes
+docker run --rm --network sambanet --name ldap --hostname ldap -d agalilea/ldap
+docker run --rm --network sambanet --name samba --hostname samba -it agalilea/sambahome
+docker run --rm --network sambanet --privileged --name client  -hostname client -it agalilea/sambaclient 
 ```
